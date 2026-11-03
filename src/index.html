@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<title>MD 预览器</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand"><span class="dot"></span>MD 预览器</div>
+  <div class="doc-head">
+    <div id="doc-title" class="doc-title">未打开文件</div>
+    <div id="doc-meta" class="doc-meta">把 .md 文件拖进来，或点击「打开文件」</div>
+  </div>
+  <div class="tools">
+    <button id="btn-open" class="btn primary" type="button">打开文件</button>
+    <button id="btn-folder" class="btn" type="button">打开文件夹</button>
+    <button id="btn-theme" class="btn icon" type="button" title="切换主题（浅色 / 深色 / 跟随系统）">◐</button>
+    <button id="btn-source" class="btn icon" type="button" title="源码 / 预览（Ctrl+E）">&#8249;&#8250;</button>
+    <button id="btn-font-dec" class="btn icon" type="button" title="缩小字号（Ctrl+-）">A-</button>
+    <button id="btn-font-inc" class="btn icon" type="button" title="放大字号（Ctrl+=）">A+</button>
+    <button id="btn-print" class="btn" type="button" title="打印 / 另存为 PDF（Ctrl+P）">打印</button>
+  </div>
+</header>
+
+<main class="layout">
+  <aside id="sidebar" class="sidebar">
+    <div class="panel">
+      <div class="panel-head"><span>文件</span><span id="file-count" class="count">0</span></div>
+      <input id="file-filter" class="filter" type="search" placeholder="筛选文件…" autocomplete="off">
+      <div id="file-list" class="file-list"></div>
+    </div>
+    <div class="panel grow">
+      <div class="panel-head"><span>大纲</span></div>
+      <div id="outline" class="outline"></div>
+    </div>
+  </aside>
+
+  <section id="content" class="content">
+    <article id="viewer" class="markdown-body" hidden></article>
+    <div id="empty" class="empty">
+      <div class="empty-card">
+        <div class="empty-icon">.md</div>
+        <h2>把 Markdown 文件拖进来</h2>
+        <p>单个文件、多个文件、整个文件夹都可以。支持 .md / .markdown / .txt。</p>
+        <div class="empty-actions">
+          <button id="btn-open2" class="btn primary" type="button">选择文件</button>
+          <button id="btn-folder2" class="btn" type="button">选择文件夹</button>
+        </div>
+        <ul class="tips">
+          <li><kbd>Ctrl</kbd>+<kbd>O</kbd> 打开文件，<kbd>Ctrl</kbd>+<kbd>E</kbd> 切换源码</li>
+          <li>从文件夹打开时，相对路径引用的图片会自动显示</li>
+          <li><kbd>Ctrl</kbd>+<kbd>P</kbd> 打印 / 另存为 PDF，只输出正文</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<input id="file-input" type="file" multiple accept=".md,.markdown,.mdown,.mkd,.txt" hidden>
+<input id="dir-input" type="file" webkitdirectory directory multiple hidden>
+
+<script src="md.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

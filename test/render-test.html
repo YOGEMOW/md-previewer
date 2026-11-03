@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="utf-8">
+<title>渲染自检</title>
+<link rel="stylesheet" href="../src/style.css">
+<style>
+  html[data-theme="dark"] { background: #15171b; }
+  body { overflow: visible; display: block; }
+  .viewport { width: 900px; margin: 0 auto; }
+</style>
+</head>
+<body>
+<div class="viewport">
+  <article id="viewer" class="markdown-body"></article>
+</div>
+<script src="../src/md.js"></script>
+<script>
+  var FIXTURE = [
+    '# 静读天下 APK 检查报告',
+    '',
+    '这是一段**中文正文**，包含*斜体*、~~删除线~~、行内代码 `adb shell pm list packages` 以及一个[外部链接](https://example.com)。',
+    '',
+    '## 一、基本信息',
+    '',
+    '| 项目 | 数值 | 说明 |',
+    '|:-----|-----:|:----:|',
+    '| 包名 | `com.gedoor.moonreader` | 阅读类 |',
+    '| 版本 | 9.9.9 | 2026 年 |',
+    '| 大小 | 12.4 MB | — |',
+    '',
+    '## 二、检查项',
+    '',
+    '- 权限声明正常',
+    '- 无后台自启动痕迹',
+    '  - 未发现定时任务',
+    '  - 未发现隐藏服务',
+    '- 签名一致',
+    '',
+    '1. 解包校验',
+    '2. 权限比对',
+    '3. 联网行为观察',
+    '',
+    '- [x] 静态扫描完成',
+    '- [ ] 动态跟踪待补',
+    '',
+    '## 三、关键代码',
+    '',
+    '```js',
+    'const apk = await inspect(file);',
+    'if (apk.permissions.includes("BOOT_COMPLETED")) {',
+    '  console.warn("存在开机自启权限", 1);',
+    '}',
+    '```',
+    '',
+    '## 四、结论',
+    '',
+    '> 该 APK 整体干净，建议继续观察联网行为。',
+    '> 第二行引用内容。',
+    '',
+    '---',
+    '',
+    '补充说明标题',
+    '---',
+    '',
+    '结尾段落。'
+  ].join('\n');
+
+  var res = MD.parse(FIXTURE);
+  if (/[?&]theme=dark/.test(location.search)) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+  document.getElementById('viewer').innerHTML = res.html;
+  document.title = '渲染自检 · ' + res.toc.length + ' 标题';
+</script>
+</body>
+</html>

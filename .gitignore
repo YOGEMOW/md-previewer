@@ -1,0 +1,18 @@
+# 依赖与缓存
+node_modules/
+.npm-cache/
+
+# 运行时产物
+*.log
+test/_diag/
+%TEMP%/
+
+# 系统/编辑器
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# 临时打包文件
+*.tmp

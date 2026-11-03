@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="utf-8">
+<title>MD 预览器 · 界面自检</title>
+<link rel="stylesheet" href="../src/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand"><span class="dot"></span>MD 预览器</div>
+  <div class="doc-head">
+    <div id="doc-title" class="doc-title">未打开文件</div>
+    <div id="doc-meta" class="doc-meta">把 .md 文件拖进来，或点击「打开文件」</div>
+  </div>
+  <div class="tools">
+    <button id="btn-open" class="btn primary" type="button">打开文件</button>
+    <button id="btn-folder" class="btn" type="button">打开文件夹</button>
+    <button id="btn-theme" class="btn icon" type="button" title="切换主题">&#9680;</button>
+    <button id="btn-source" class="btn icon" type="button" title="源码 / 预览">&#8249;&#8250;</button>
+    <button id="btn-font-dec" class="btn icon" type="button" title="缩小字号">A-</button>
+    <button id="btn-font-inc" class="btn icon" type="button" title="放大字号">A+</button>
+    <button id="btn-print" class="btn" type="button" title="打印">打印</button>
+  </div>
+</header>
+
+<main class="layout">
+  <aside id="sidebar" class="sidebar">
+    <div class="panel">
+      <div class="panel-head"><span>文件</span><span id="file-count" class="count">0</span></div>
+      <input id="file-filter" class="filter" type="search" placeholder="筛选文件…" autocomplete="off">
+      <div id="file-list" class="file-list"></div>
+    </div>
+    <div class="panel grow">
+      <div class="panel-head"><span>大纲</span></div>
+      <div id="outline" class="outline"></div>
+    </div>
+  </aside>
+
+  <section id="content" class="content">
+    <article id="viewer" class="markdown-body" hidden></article>
+    <div id="empty" class="empty">
+      <div class="empty-card">
+        <div class="empty-icon">.md</div>
+        <h2>把 Markdown 文件拖进来</h2>
+        <p>单个文件、多个文件、整个文件夹都可以。支持 .md / .markdown / .txt。</p>
+        <div class="empty-actions">
+          <button id="btn-open2" class="btn primary" type="button">选择文件</button>
+          <button id="btn-folder2" class="btn" type="button">选择文件夹</button>
+        </div>
+        <ul class="tips">
+          <li><kbd>Ctrl</kbd>+<kbd>O</kbd> 打开文件，<kbd>Ctrl</kbd>+<kbd>E</kbd> 切换源码</li>
+          <li>从文件夹打开时，相对路径引用的图片会自动显示</li>
+          <li><kbd>Ctrl</kbd>+<kbd>P</kbd> 打印 / 另存为 PDF，只输出正文</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<input id="file-input" type="file" multiple accept=".md,.markdown,.mdown,.mkd,.txt" hidden>
+<input id="dir-input" type="file" webkitdirectory directory multiple hidden>
+
+<script src="../src/md.js"></script>
+<script src="../src/app.js"></script>
+<script>
+  // 仅用于截图自检：自动注入一个示例文档，走和真实打开文件相同的路径
+  window.addEventListener('load', function () {
+    var SAMPLE = [
+      '# 检查报告',
+      '',
+      '正文包含**粗体**、*斜体*、`行内代码` 与[链接](https://example.com)，用于检查排版。',
+      '',
+      '## 一、基本信息',
+      '',
+      '| 项目 | 数值 | 说明 |',
+      '|:-----|-----:|:----:|',
+      '| 包名 | `com.gedoor.moonreader` | 阅读类 |',
+      '| 版本 | 9.9.9 | 2026 年 |',
+      '',
+      '## 二、检查项',
+      '',
+      '- 权限声明正常',
+      '- 无后台自启动痕迹',
+      '  - 未发现定时任务',
+      '  - 未发现隐藏服务',
+      '- 签名一致',
+      '',
+      '1. 解包校验',
+      '2. 权限比对',
+      '',
+      '- [x] 静态扫描完成',
+      '- [ ] 动态跟踪待补',
+      '',
+      '## 三、关键代码',
+      '',
+      '```js',
+      'const apk = await inspect(file);',
+      'if (apk.permissions.includes("BOOT_COMPLETED")) {',
+      '  console.warn("存在开机自启权限", 1);',
+      '}',
+      '```',
+      '',
+      '## 四、结论',
+      '',
+      '> 整体干净，建议继续观察联网行为。',
+      ''
+    ].join('\n');
+
+    var f1 = new File([SAMPLE], '检查报告.md', { type: 'text/markdown' });
+    var f2 = new File(['# 附录\n\n另一份文档。'], '附录.md', { type: 'text/markdown' });
+    var f3 = new File(['# 更新日志\n\n- 修复列表间距'], 'CHANGELOG.md', { type: 'text/markdown' });
+    var input = document.getElementById('file-input');
+    Object.defineProperty(input, 'files', { value: [f1, f2, f3], configurable: true });
+    input.dispatchEvent(new Event('change'));
+
+    // 截图用：?theme=dark 强制深色（真实页面用右上角按钮切换）
+    if (/[?&]theme=dark/.test(location.search)) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  });
+</script>
+</body>
+</html>
