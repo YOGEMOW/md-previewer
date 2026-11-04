@@ -79,6 +79,7 @@ test/
   app-demo.html       界面自检页（自动灌入示例文档）
 dev/boot-test.js      用 jsdom 加载打包产物验证交互（31 项）
 screenshots/          界面截图
+docs/                 CI 工作流示例等文档
 ```
 
 ## 开发
@@ -94,6 +95,15 @@ node boot-test.js         # 界面回归测试
 ```
 
 `src/` 是唯一的事实来源；改动后重新 `node build.js` 生成单文件版本。
+
+## 持续集成（可选）
+
+`docs/ci-workflow.yml.example` 是一份现成的 GitHub Actions 工作流：跑解析器测试、语法检查、重新打包并校验产物是否最新，外加 jsdom 界面回归。
+
+它默认没有启用 —— 因为推送 `.github/workflows/*.yml` 需要 token 具备 `workflow` 权限。启用方式二选一：
+
+1. 命令行：`gh auth refresh -s workflow` 授权后，把该文件复制成 `.github/workflows/test.yml` 再提交推送
+2. 网页：在 GitHub 上新建 `.github/workflows/test.yml`，把示例文件内容粘进去
 
 ## 已知限制
 

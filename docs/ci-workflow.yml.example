@@ -1,0 +1,50 @@
+# 这是 GitHub Actions 工作流模板，默认不启用。
+#
+# 启用方法（二选一）：
+#   1) 授权 workflow 权限后由命令行推送：
+#        gh auth refresh -s workflow
+#        Move-Item .\docs\ci-workflow.yml.example .\.github\workflows\test.yml
+#        git add . && git commit -m "ci: 启用测试工作流" && git push
+#   2) 直接在 GitHub 网页上新建 .github/workflows/test.yml，把下面的内容粘进去。
+#
+# 为什么要单独放：推送 .github/workflows/*.yml 需要 token 具备 workflow 权限，
+# 而普通 repo 权限的 OAuth token 会被 GitHub 拒绝（"refusing to allow an OAuth App
+# to create or update workflow ... without workflow scope"）。
+name: test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 解析器单元测试
+        run: node test/test-md.js
+
+      - name: 语法检查
+        run: |
+          node --check src/md.js
+          node --check src/app.js
+          node --check src/build.js
+          node --check bin/md-open.js
+
+      - name: 重新打包单文件版
+        run: node src/build.js
+
+      - name: 检查打包产物是否为最新
+        run: git diff --exit-code -- Markdown预览器.html
+
+      - name: 界面回归测试（jsdom）
+        working-directory: dev
+        run: |
+          npm install --no-audit --no-fund
+          node boot-test.js
