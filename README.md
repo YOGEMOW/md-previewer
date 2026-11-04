@@ -1,5 +1,8 @@
 # Markdown 预览器
 
+[![release](https://img.shields.io/github/v/release/YOGEMOW/md-previewer?style=flat-square)](https://github.com/YOGEMOW/md-previewer/releases/latest)
+[![license](https://img.shields.io/github/license/YOGEMOW/md-previewer?style=flat-square)](LICENSE)
+
 一个**单文件、离线、零依赖**的本地 Markdown 阅读器。双击 HTML 就能用，不需要安装、不需要联网，也不上传任何内容。
 
 - 单文件版：`Markdown预览器.html`（约 53 KB，样式与脚本全部内联，无任何外部请求）
@@ -7,9 +10,16 @@
 
 ![界面截图](screenshots/app-light.png)
 
+## 下载
+
+- **推荐**：[Releases](https://github.com/YOGEMOW/md-previewer/releases/latest) 里下载 `md-previewer.html`，双击即用
+- 或者直接下载仓库里的 [`Markdown预览器.html`](Markdown预览器.html)（同一份构建，SHA256 一致）
+
+> 说明：GitHub 的 Release 附件会丢弃非 ASCII 文件名，所以附件叫 `md-previewer.html`；它和仓库里的 `Markdown预览器.html` 是同一份文件，改名不影响使用。
+
 ## 快速开始
 
-**方式一：直接双击** `Markdown预览器.html`，然后把 `.md` 文件（或多个文件、整个文件夹）拖进窗口。
+**方式一：直接双击** 下载到的 HTML，然后把 `.md` 文件（或多个文件、整个文件夹）拖进窗口。
 
 **方式二：从文件夹打开**，点「打开文件夹」选择目录 —— 这样正文里用相对路径引用的图片也会自动显示。
 
